@@ -77,10 +77,10 @@ pipeline {
         stage('Build 9.6.18') {
             steps {
                 sh '''
-                    rm -rf postgresql || true
+                    rm -rf postgresql-9.6.18 || true
                     tar -zxvf /home/jenkins/Postgres/postgresql-9.6.18.tar.gz > /dev/null
                 '''
-                dir("postgresql/contrib") {
+                dir("postgresql-9.6.18/contrib") {
                     sh 'rm -rf sqlite_fdw || true'
                     retrySh('git clone ' + SQLITE_FDW_URL)
                 }
@@ -94,7 +94,7 @@ pipeline {
         }
         stage('sqlite_fdw_test 9.6.18') {
             steps {
-                dir("postgresql/contrib/sqlite_fdw") { 
+                dir("postgresql-9.6.18/contrib/sqlite_fdw") { 
                     catchError() {
                         sh '''
                             chmod +x ./*.sh || true
@@ -116,10 +116,10 @@ pipeline {
         stage('Build 10.13') {
             steps {
                 sh '''
-                    rm -rf postgresql || true
+                    rm -rf postgresql-10.13 || true
                     tar -zxvf /home/jenkins/Postgres/postgresql-10.13.tar.gz > /dev/null
                 '''
-                dir("postgresql/contrib") {
+                dir("postgresql-10.13/contrib") {
                     sh 'rm -rf sqlite_fdw || true'
                     retrySh('git clone ' + SQLITE_FDW_URL)
                 }
@@ -133,7 +133,7 @@ pipeline {
         }
         stage('sqlite_fdw_test 10.13') {
             steps {
-                dir("postgresql/contrib/sqlite_fdw") { 
+                dir("postgresql-10.13/contrib/sqlite_fdw") { 
                     catchError() {
                         sh '''
                             chmod +x ./*.sh || true
@@ -155,10 +155,10 @@ pipeline {
         stage('Build 11.8') {
             steps {
                 sh '''
-                    rm -rf postgresql || true
+                    rm -rf postgresql-11.8 || true
                     tar -zxvf /home/jenkins/Postgres/postgresql-11.8.tar.gz > /dev/null
                 '''
-                dir("postgresql/contrib") {
+                dir("postgresql-11.8/contrib") {
                     sh 'rm -rf sqlite_fdw || true'
                     retrySh('git clone ' + SQLITE_FDW_URL)
                 }
@@ -172,7 +172,7 @@ pipeline {
         }
         stage('sqlite_fdw_test 11.8') {
             steps {
-                dir("postgresql/contrib/sqlite_fdw") { 
+                dir("postgresql-11.8/contrib/sqlite_fdw") { 
                     catchError() {
                         sh '''
                             chmod +x ./*.sh || true
@@ -194,10 +194,10 @@ pipeline {
         stage('Build 12.3') {
             steps {
                 sh '''
-                    rm -rf postgresql || true
+                    rm -rf postgresql-12.3 || true
                     tar -zxvf /home/jenkins/Postgres/postgresql-12.3.tar.gz > /dev/null
                 '''
-                dir("postgresql/contrib") {
+                dir("postgresql-12.3/contrib") {
                     sh 'rm -rf sqlite_fdw || true'
                     retrySh('git clone ' + SQLITE_FDW_URL)
                 }
@@ -211,7 +211,7 @@ pipeline {
         }
         stage('sqlite_fdw_test 12.3') {
             steps {
-                dir("postgresql/contrib/sqlite_fdw") { 
+                dir("postgresql-12.3/contrib/sqlite_fdw") { 
                     catchError() {
                         sh '''
                             chmod +x ./*.sh || true
