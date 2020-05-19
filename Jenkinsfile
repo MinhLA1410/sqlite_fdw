@@ -74,5 +74,161 @@ pipeline {
                 }
             }
         }
+        stage('Build 9.6.18') {
+            steps {
+                sh '''
+                    rm -rf postgresql || true
+                    tar -zxvf /home/jenkins/Postgres/postgresql-9.6.18.tar.gz > /dev/null
+                '''
+                dir("postgresql/contrib") {
+                    sh 'rm -rf sqlite_fdw || true'
+                    retrySh('git clone ' + SQLITE_FDW_URL)
+                }
+            }
+            post {
+                failure {
+                    echo '** BUILD FAILED !!! NEXT STAGE WILL BE SKIPPED **'
+                    emailext subject: "${MAIL_SUBJECT}", body: BUILD_INFO + "\nGit commit: " + env.GIT_URL.replace(".git", "/commit/") + env.GIT_COMMIT + "\n" + '${BUILD_LOG, maxLines=200, escapeHtml=false}', to: "${MAIL_TO}", attachLog: false
+                }
+            }
+        }
+        stage('sqlite_fdw_test 9.6.18') {
+            steps {
+                dir("postgresql/contrib/sqlite_fdw") { 
+                    catchError() {
+                        sh '''
+                            chmod +x ./*.sh || true
+                            rm -rf make_check.out || true
+                            ./test_extra.sh
+                        '''
+                    }
+                    script {
+                        status = sh(returnStatus: true, script: "grep -q 'All [0-9]* tests passed' 'make_check.out'")
+                        if (status != 0) {
+                            unstable(message: "Set UNSTABLE result")
+                            emailext subject: "${MAIL_SUBJECT}", body: BUILD_INFO + "\nGit commit: " + env.GIT_URL.replace(".git", "/commit/") + env.GIT_COMMIT + "\n" + '${FILE,path="make_check.out"}', to: "${MAIL_TO}", attachLog: false
+                            sh 'cat regression.diffs || true'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build 10.13') {
+            steps {
+                sh '''
+                    rm -rf postgresql || true
+                    tar -zxvf /home/jenkins/Postgres/postgresql-10.13.tar.gz > /dev/null
+                '''
+                dir("postgresql/contrib") {
+                    sh 'rm -rf sqlite_fdw || true'
+                    retrySh('git clone ' + SQLITE_FDW_URL)
+                }
+            }
+            post {
+                failure {
+                    echo '** BUILD FAILED !!! NEXT STAGE WILL BE SKIPPED **'
+                    emailext subject: "${MAIL_SUBJECT}", body: BUILD_INFO + "\nGit commit: " + env.GIT_URL.replace(".git", "/commit/") + env.GIT_COMMIT + "\n" + '${BUILD_LOG, maxLines=200, escapeHtml=false}', to: "${MAIL_TO}", attachLog: false
+                }
+            }
+        }
+        stage('sqlite_fdw_test 10.13') {
+            steps {
+                dir("postgresql/contrib/sqlite_fdw") { 
+                    catchError() {
+                        sh '''
+                            chmod +x ./*.sh || true
+                            rm -rf make_check.out || true
+                            ./test_extra.sh
+                        '''
+                    }
+                    script {
+                        status = sh(returnStatus: true, script: "grep -q 'All [0-9]* tests passed' 'make_check.out'")
+                        if (status != 0) {
+                            unstable(message: "Set UNSTABLE result")
+                            emailext subject: "${MAIL_SUBJECT}", body: BUILD_INFO + "\nGit commit: " + env.GIT_URL.replace(".git", "/commit/") + env.GIT_COMMIT + "\n" + '${FILE,path="make_check.out"}', to: "${MAIL_TO}", attachLog: false
+                            sh 'cat regression.diffs || true'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build 11.8') {
+            steps {
+                sh '''
+                    rm -rf postgresql || true
+                    tar -zxvf /home/jenkins/Postgres/postgresql-11.8.tar.gz > /dev/null
+                '''
+                dir("postgresql/contrib") {
+                    sh 'rm -rf sqlite_fdw || true'
+                    retrySh('git clone ' + SQLITE_FDW_URL)
+                }
+            }
+            post {
+                failure {
+                    echo '** BUILD FAILED !!! NEXT STAGE WILL BE SKIPPED **'
+                    emailext subject: "${MAIL_SUBJECT}", body: BUILD_INFO + "\nGit commit: " + env.GIT_URL.replace(".git", "/commit/") + env.GIT_COMMIT + "\n" + '${BUILD_LOG, maxLines=200, escapeHtml=false}', to: "${MAIL_TO}", attachLog: false
+                }
+            }
+        }
+        stage('sqlite_fdw_test 11.8') {
+            steps {
+                dir("postgresql/contrib/sqlite_fdw") { 
+                    catchError() {
+                        sh '''
+                            chmod +x ./*.sh || true
+                            rm -rf make_check.out || true
+                            ./test_extra.sh
+                        '''
+                    }
+                    script {
+                        status = sh(returnStatus: true, script: "grep -q 'All [0-9]* tests passed' 'make_check.out'")
+                        if (status != 0) {
+                            unstable(message: "Set UNSTABLE result")
+                            emailext subject: "${MAIL_SUBJECT}", body: BUILD_INFO + "\nGit commit: " + env.GIT_URL.replace(".git", "/commit/") + env.GIT_COMMIT + "\n" + '${FILE,path="make_check.out"}', to: "${MAIL_TO}", attachLog: false
+                            sh 'cat regression.diffs || true'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build 12.3') {
+            steps {
+                sh '''
+                    rm -rf postgresql || true
+                    tar -zxvf /home/jenkins/Postgres/postgresql-12.3.tar.gz > /dev/null
+                '''
+                dir("postgresql/contrib") {
+                    sh 'rm -rf sqlite_fdw || true'
+                    retrySh('git clone ' + SQLITE_FDW_URL)
+                }
+            }
+            post {
+                failure {
+                    echo '** BUILD FAILED !!! NEXT STAGE WILL BE SKIPPED **'
+                    emailext subject: "${MAIL_SUBJECT}", body: BUILD_INFO + "\nGit commit: " + env.GIT_URL.replace(".git", "/commit/") + env.GIT_COMMIT + "\n" + '${BUILD_LOG, maxLines=200, escapeHtml=false}', to: "${MAIL_TO}", attachLog: false
+                }
+            }
+        }
+        stage('sqlite_fdw_test 12.3') {
+            steps {
+                dir("postgresql/contrib/sqlite_fdw") { 
+                    catchError() {
+                        sh '''
+                            chmod +x ./*.sh || true
+                            rm -rf make_check.out || true
+                            ./test_extra.sh
+                        '''
+                    }
+                    script {
+                        status = sh(returnStatus: true, script: "grep -q 'All [0-9]* tests passed' 'make_check.out'")
+                        if (status != 0) {
+                            unstable(message: "Set UNSTABLE result")
+                            emailext subject: "${MAIL_SUBJECT}", body: BUILD_INFO + "\nGit commit: " + env.GIT_URL.replace(".git", "/commit/") + env.GIT_COMMIT + "\n" + '${FILE,path="make_check.out"}', to: "${MAIL_TO}", attachLog: false
+                            sh 'cat regression.diffs || true'
+                        }
+                    }
+                }
+            }
+        }
     }
 }
