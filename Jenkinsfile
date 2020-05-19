@@ -1,9 +1,9 @@
 def NODE_NAME = 'AWS_Instance_CentOS'
 def BRANCH_NAME = 'Branch [' + env.BRANCH_NAME + ']'
 def BUILD_INFO = 'Jenkins job: ' + env.BUILD_URL
-def MAIL_TO='$DEFAULT_RECIPIENTS'
+def MAIL_TO='minh.leanh@toshiba-tsdv.com'
 def MAIL_SUBJECT='[CI PGSpider] SQLite FDW Test FAILED ' + BRANCH_NAME
-def SQLITE_FDW_URL = 'https://github.com/pgspider/sqlite_fdw.git'
+def SQLITE_FDW_URL = 'https://github.com/MinhLA1410/sqlite_fdw.git'
 
 def retrySh(String shCmd) {
     def MAX_RETRY = 10
